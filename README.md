@@ -36,3 +36,4 @@ index.html → application complète (Vue + UI)
 ---
 
 ## 📸 Aperçu
+<img width="1737" height="728" alt="image" src="https://github.com/user-attachments/assets/5647e808-aa8d-4ac1-aaca-a36de76ac7a8" />
