@@ -1,1 +1,114 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mini Boutique Vue</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body class="bg-gray-100">
+
+<div id="app" class="max-w-6xl mx-auto p-6">
+
+  <h1 class="text-3xl font-bold text-center text-indigo-600 mb-6">
+    🛒 Mini Boutique Vue.js
+  </h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- PRODUITS -->
+    <div>
+      <h2 class="text-xl font-semibold mb-3">Produits</h2>
+
+      <div v-for="product in products"
+           :key="product.id"
+           class="bg-white p-4 rounded-xl shadow mb-3 flex justify-between items-center">
+
+        <div>
+          <h3 class="font-bold">{{ product.name }}</h3>
+          <p class="text-gray-500">{{ product.price }} $</p>
+        </div>
+
+        <button
+          @click="addToCart(product)"
+          class="bg-indigo-500 hover:bg-indigo-600 text-white px-3 py-1 rounded-lg">
+          Ajouter
+        </button>
+      </div>
+    </div>
+
+    <!-- PANIER -->
+    <div>
+      <h2 class="text-xl font-semibold mb-3">🛒 Panier</h2>
+
+      <div v-if="cart.length === 0" class="text-gray-400">
+        Panier vide
+      </div>
+
+      <div v-for="(item, index) in cart"
+           :key="index"
+           class="bg-white p-4 rounded-xl shadow mb-3 flex justify-between">
+
+        <div>
+          <p class="font-bold">{{ item.name }}</p>
+          <p class="text-gray-500">{{ item.price }} $</p>
+        </div>
+
+        <button
+          @click="removeFromCart(index)"
+          class="text-red-500">
+          ❌
+        </button>
+      </div>
+
+      <!-- TOTAL -->
+      <div class="mt-4 bg-indigo-50 p-4 rounded-xl">
+        <p class="font-bold text-lg">
+          Total: {{ total }} $
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+const { createApp } = Vue;
+
+createApp({
+  data() {
+    return {
+      products: [
+        { id: 1, name: "Laptop", price: 1200 },
+        { id: 2, name: "iPhone", price: 900 },
+        { id: 3, name: "Casque", price: 150 },
+        { id: 4, name: "Clavier", price: 80 }
+      ],
+      cart: []
+    };
+  },
+
+  computed: {
+    total() {
+      return this.cart.reduce((sum, item) => sum + item.price, 0);
+    }
+  },
+
+  methods: {
+    addToCart(product) {
+      this.cart.push(product);
+    },
+    removeFromCart(index) {
+      this.cart.splice(index, 1);
+    }
+  }
+}).mount("#app");
+</script>
+
+</body>
+</html>
